@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bluefin Tuna - Product Detail</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ocean: {
+                            dark: '#020b16',
+                            card: 'rgba(10, 25, 41, 0.7)',
+                            accent: '#d4af37',
+                            gold: {
+                                100: '#f9f1d8',
+                                300: '#e6cf8b',
+                                500: '#d4af37',
+                                700: '#997b1e',
+                            }
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        thai: ['Prompt', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base Styles */
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100%;
+            background-color: #020b16;
+            color: white;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .font-thai {
+            font-family: 'Prompt', sans-serif;
+        }
+
+        /* Text Gradients */
+        .text-gold-gradient {
+            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0px 2px 10px rgba(212, 175, 55, 0.2);
+        }
+
+        /* Glass Card Effect */
+        .glass-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: 0.3s;
+        }
+
+        /* Thumbnails */
+        .thumb-img {
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .thumb-img:hover,
+        .thumb-img.active {
+            border-color: #d4af37;
+            transform: scale(1.05);
+        }
+
+        /* Loader */
+        #loader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+
+            /* แก้ไข: เปลี่ยนจากสีดำ #000 เป็นการไล่เฉดสีน้ำเงินน้ำทะเล */
+            background: radial-gradient(circle, #0f4b6e 0%, #020b16 100%);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: monospace;
+            color: #d4af37;
+            letter-spacing: 2px;
+            transition: opacity 1s;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loader">
+        <img src="logo.png" alt="Loading..."
+            class="w-48 md:w-64 h-auto animate-pulse drop-shadow-[0_0_25px_rgba(212,175,55,0.6)]">
+    </div>
+
+    <div class="relative w-full flex flex-col pb-6">
+        <div class="absolute inset-0 bg-gradient-to-b from-[#0f4b6e] via-[#02203c] to-ocean-dark z-0"></div>
+
+        <nav class="relative z-50 w-full" data-aos="fade-down">
+            <div class="flex items-center justify-between px-6 md:px-8 py-6 max-w-7xl mx-auto">
+
+                <div class="flex items-center gap-4 drop-shadow-md">
+                    <img class="h-8 md:h-10 w-auto drop-shadow-lg" src="logo.png" alt="Logo" />
+                    <div class="leading-tight font-bold text-2xl md:text-3xl font-sans text-ocean-accent">Oceava</div>
+                </div>
+
+                <div
+                    class="hidden md:flex space-x-8 text-xs font-semibold tracking-widest uppercase text-white/90 drop-shadow-md">
+                    <a href="index.html" class="hover:text-ocean-accent transition">Home</a>
+                    <a href="about.html" class="hover:text-ocean-accent transition">About Us</a>
+                    <a href="products.html" class="hover:text-ocean-accent transition">Products</a>
+                    <a href="team.html" class="hover:text-ocean-accent transition">Our Team</a>
+                    <a href="news.html" class="hover:text-ocean-accent transition">News</a>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="contact.html"
+                        class="bg-ocean-accent text-ocean-dark px-6 py-2 text-xs font-bold uppercase tracking-wider hover:bg-white transition shadow-lg cursor-pointer">
+                        Contact Us
+                    </a>
+                </div>
+
+                <button id="mobile-menu-btn" class="md:hidden text-white text-2xl focus:outline-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <div id="mobile-menu"
+                class="hidden md:hidden absolute top-full left-0 w-full bg-[#020b16]/50 backdrop-blur-md border-t border-white/10 shadow-2xl transition-all duration-300 origin-top z-50">
+                <div class="flex flex-col p-6 space-y-4 text-center">
+                    <a href="index.html"
+                        class="text-white hover:text-ocean-accent font-bold uppercase tracking-wider text-sm py-2 border-b border-white/5">Home</a>
+                    <a href="about.html"
+                        class="text-white hover:text-ocean-accent font-bold uppercase tracking-wider text-sm py-2 border-b border-white/5">About
+                        Us</a>
+                    <a href="products.html"
+                        class="text-white hover:text-ocean-accent font-bold uppercase tracking-wider text-sm py-2 border-b border-white/5">Products</a>
+                    <a href="team.html"
+                        class="text-white hover:text-ocean-accent font-bold uppercase tracking-wider text-sm py-2 border-b border-white/5">Our
+                        Team</a>
+                    <a href="news.html"
+                        class="text-white hover:text-ocean-accent font-bold uppercase tracking-wider text-sm py-2 border-b border-white/5">News</a>
+
+                    <a href="contact.html"
+                        class="bg-ocean-accent text-ocean-dark px-6 py-3 mt-4 text-sm font-bold uppercase tracking-wider hover:bg-white transition shadow-lg inline-block w-full rounded">
+                        Get Quote
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+
+    </div>
+
+    <div id="content-section" class="bg-ocean-dark relative z-20 border-t border-white/5 pb-20 pt-10">
+        <main class="container mx-auto px-6 max-w-7xl">
+
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-stretch">
+
+                <div class="flex flex-col h-full" data-aos="fade-right">
+
+                    <div
+                        class="flex-1 relative group overflow-hidden rounded-2xl mb-4 min-h-[400px] border border-white/5">
+                        <img src="b_tuna1.jpg" alt="Bluefin Tuna"
+                            class="absolute inset-0 w-full h-full object-cover transition duration-700 group-hover:scale-110">
+                        <span
+                            class="absolute top-4 left-4 bg-ocean-accent text-ocean-dark text-xs px-3 py-1 rounded font-bold uppercase tracking-wider shadow-lg z-10">
+                            In Stock
+                        </span>
+                    </div>
+
+                    <div class="grid grid-cols-4 gap-4 h-24 flex-shrink-0">
+                        <img src="b_tuna1.jpg"
+                            class="thumb-img active w-full h-full object-cover rounded-lg cursor-pointer">
+                        <img src="b_tuna2.jpg" class="thumb-img w-full h-full object-cover rounded-lg cursor-pointer">
+                        <img src="b_tuna3.jpg" class="thumb-img w-full h-full object-cover rounded-lg cursor-pointer">
+                        <img src="b_tuna4.jpg" class="thumb-img w-full h-full object-cover rounded-lg cursor-pointer">
+                    </div>
+                </div>
+
+                <div class="flex flex-col h-full justify-between" data-aos="fade-left">
+
+                    <div>
+                        <div class="mb-6 border-b border-white/10 pb-6">
+                            <h1 class="text-3xl md:text-4xl font-bold text-white mb-2 leading-tight">Bluefin Tuna
+                                <span class="text-gray-500 text-xl font-normal block md:inline md:ml-2">(Hon
+                                    Maguro)</span>
+                            </h1>
+                            <p class="text-gray-400 font-thai text-sm md:text-base mb-4">ปลาทูน่าครีบน้ำเงิน (Bluefin)
+                                ราชาแห่งปลาทูน่า
+                                เกรดโอมากาเสะ นำเข้าสดใหม่จากแหล่งประมงชั้นนำ</p>
+
+                            <div class="flex flex-wrap gap-2">
+                                <span
+                                    class="bg-ocean-accent/10 text-ocean-accent border border-ocean-accent/20 text-xs font-semibold px-3 py-1 rounded-full uppercase tracking-wider">Sashimi
+                                    Grade</span>
+                                <span
+                                    class="bg-white/5 text-gray-300 border border-white/10 text-xs px-3 py-1 rounded-full">Wild
+                                    Caught</span>
+                                <span
+                                    class="bg-white/5 text-gray-300 border border-white/10 text-xs px-3 py-1 rounded-full">Whole
+                                    Round</span>
+                            </div>
+
+                            <div class="mt-6">
+                                <span class="block text-xs text-gray-500 uppercase tracking-widest mb-1">Reference
+                                    Price</span>
+                                <div class="flex items-end gap-2">
+                                    <span class="text-4xl md:text-5xl font-bold text-gold-gradient">฿2,800 -
+                                        ฿3,500</span>
+                                    <span class="text-gray-400 mb-2 font-medium">/ kg</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="glass-card rounded-xl p-6 mb-6 border border-white/10">
+                            <h3
+                                class="text-sm font-bold text-ocean-accent uppercase tracking-widest mb-4 flex items-center gap-2">
+                                <i class="fas fa-clipboard-check"></i> Specifications
+                            </h3>
+                            <div class="grid grid-cols-2 gap-y-4 gap-x-4 text-sm">
+                                <div>
+                                    <span class="block text-gray-500 mb-1 text-xs uppercase">Fish Type</span>
+                                    <span class="font-semibold text-white">Tuna (ปลาทูน่า)</span>
+                                </div>
+                                <div>
+                                    <span class="block text-gray-500 mb-1 text-xs uppercase">Grade</span>
+                                    <span class="font-semibold text-white">Bluefin / Grade A+</span>
+                                </div>
+                                <div>
+                                    <span class="block text-gray-500 mb-1 text-xs uppercase">Weight</span>
+                                    <span class="font-semibold text-white">40kg - 80kg / fish</span>
+                                </div>
+                                <div>
+                                    <span class="block text-gray-500 mb-1 text-xs uppercase">Origin</span>
+                                    <span class="font-semibold text-white">Cartagena, Spain</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mt-auto">
+                        <div class="grid grid-cols-2 gap-4 mb-6">
+                            <div class="glass-card rounded-lg p-4 flex flex-col justify-center border border-white/5">
+                                <span class="text-gray-500 text-xs uppercase tracking-wider mb-1">Min Order</span>
+                                <span class="font-bold text-white">1 Fish <span
+                                        class="text-sm font-normal text-gray-400">(~40kg)</span></span>
+                            </div>
+                            <div class="glass-card rounded-lg p-4 flex flex-col justify-center border border-white/5">
+                                <span class="text-gray-500 text-xs uppercase tracking-wider mb-1">Storage</span>
+                                <span class="font-bold text-white flex items-center gap-2">
+                                    <i class="fas fa-snowflake text-blue-400 text-sm"></i> 0°C - 2°C
+                                </span>
+                            </div>
+                        </div>
+
+                        <button
+                            class="w-full py-4 bg-ocean-accent hover:bg-white hover:text-ocean-dark text-ocean-dark font-extrabold text-lg rounded-xl shadow-[0_0_20px_rgba(212,175,55,0.4)] hover:shadow-[0_0_30px_rgba(255,255,255,0.6)] transition-all duration-300 transform hover:-translate-y-1 flex items-center justify-center gap-3 uppercase tracking-wider group">
+                            <span>Request Quote</span>
+                            <i class="fas fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+
+        <section class="mt-20 border-t border-white/10 pt-16">
+            <div class="container mx-auto px-6 max-w-6xl">
+
+                <div class="text-center mb-16" data-aos="fade-up">
+                    <span class="text-ocean-accent font-bold tracking-[0.25em] uppercase text-xs">Traceability</span>
+                    <h2 class="text-3xl font-bold text-white mt-2">From Ocean to Table</h2>
+                    <p class="text-gray-400 mt-3 max-w-2xl mx-auto font-thai">
+                        แหล่งวัตถุดิบของเราส่งตรงจากน่านน้ำ <strong class="text-ocean-accent">Cartagena, Spain</strong>
+                        แหล่งประมงทูน่าคุณภาพสูงที่ได้รับการยอมรับระดับโลก
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-12 items-start">
+
+                    <div class="lg:col-span-1 h-full" data-aos="fade-right">
+                        <div class="sticky top-24">
+                            <div class="glass-card rounded-2xl p-6 text-center border border-ocean-accent/20">
+                                <div
+                                    class="w-full aspect-square bg-ocean-dark rounded-xl mb-4 overflow-hidden relative group border border-white/10">
+
+                                    <iframe
+                                        src="https://maps.google.com/maps?q=Cartagena,+Spain&t=&z=6&ie=UTF8&iwloc=&output=embed"
+                                        width="100%" height="100%"
+                                        style="border:0; filter: grayscale(100%) invert(100%) sepia(80%) hue-rotate(180deg) saturate(450%) brightness(80%) contrast(1.2);"
+                                        allowfullscreen="" loading="lazy">
+                                    </iframe>
+
+                                    <div class="absolute inset-0 bg-ocean-dark/20 pointer-events-none"></div>
+                                </div>
+                                <h3 class="text-xl font-bold text-white">Origin: Cartagena</h3>
+                                <p class="text-sm text-gray-400 mt-2">Murcia, Spain (Mediterranean)</p>
+                                <div class="mt-4 flex flex-wrap justify-center gap-2">
+                                    <span
+                                        class="px-2 py-1 bg-white/5 border border-white/10 rounded text-xs text-gray-300">FAO
+                                        37</span>
+                                    <span
+                                        class="px-2 py-1 bg-white/5 border border-white/10 rounded text-xs text-gray-300">Sustainable</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="lg:col-span-2 relative pl-4 md:pl-8 h-full">
+                        <div
+                            class="absolute left-10 md:left-14 top-4 bottom-10 w-px bg-gradient-to-b from-ocean-accent/50 to-transparent">
+                        </div>
+
+                        <div class="relative pl-24 md:pl-32 pb-12 group" data-aos="fade-up">
+                            <div
+                                class="absolute left-6 md:left-10 top-0 w-8 h-8 md:w-10 md:h-10 bg-ocean-dark border border-ocean-accent rounded-full flex items-center justify-center z-10 shadow-[0_0_15px_rgba(212,175,55,0.3)]">
+                                <i class="fas fa-ship text-ocean-accent text-sm md:text-base"></i>
+                            </div>
+                            <h3 class="text-lg md:text-xl font-bold text-white">Sustainable Harvest</h3>
+                            <p class="text-ocean-accent text-xs font-bold uppercase mb-2">Wild Caught / Purse Seine</p>
+                            <p class="text-gray-400 text-sm leading-relaxed">
+                                Our Bluefin Tuna are caught in the pristine waters of the Mediterranean. We strictly
+                                adhere to sustainable fishing quotas to ensure the longevity of the marine ecosystem.
+                            </p>
+                        </div>
+
+                        <div class="relative pl-24 md:pl-32 pb-12 group" data-aos="fade-up" data-aos-delay="100">
+                            <div
+                                class="absolute left-6 md:left-10 top-0 w-8 h-8 md:w-10 md:h-10 bg-ocean-dark border border-ocean-accent/50 rounded-full flex items-center justify-center z-10">
+                                <i class="fas fa-snowflake text-ocean-accent text-sm md:text-base"></i>
+                            </div>
+                            <h3 class="text-lg md:text-xl font-bold text-white">Cold Chain & Quality Control</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed mt-2">
+                                Immediately upon landing, the fish enters a strict cold chain environment. Each tuna
+                                undergoes rigorous <strong class="text-white">histamine testing and core temperature
+                                    checks</strong>
+                                to guarantee Sashimi-grade safety standards.
+                            </p>
+                        </div>
+
+                        <div class="relative pl-24 md:pl-32 pb-12 group" data-aos="fade-up" data-aos-delay="200">
+                            <div
+                                class="absolute left-6 md:left-10 top-0 w-8 h-8 md:w-10 md:h-10 bg-ocean-dark border border-ocean-accent/50 rounded-full flex items-center justify-center z-10">
+                                <i class="fas fa-cogs text-ocean-accent text-sm md:text-base"></i>
+                            </div>
+                            <h3 class="text-lg md:text-xl font-bold text-white">Advanced Processing</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed mt-2">
+                                Loins are processed with precision and treated with <strong class="text-white">Tasteless
+                                    Smoke (CO)</strong>
+                                technology to lock in the natural ruby-red color, followed by <strong
+                                    class="text-white">super-freezing at
+                                    -60°C</strong>
+                                to capture peak freshness.
+                            </p>
+                        </div>
+
+                        <div class="relative pl-24 md:pl-32 group" data-aos="fade-up" data-aos-delay="300">
+                            <div
+                                class="absolute left-6 md:left-10 top-0 w-8 h-8 md:w-10 md:h-10 bg-ocean-dark border border-ocean-accent/50 rounded-full flex items-center justify-center z-10">
+                                <i class="fas fa-utensils text-ocean-accent text-sm md:text-base"></i>
+                            </div>
+                            <h3 class="text-lg md:text-xl font-bold text-white">Precision Customization</h3>
+                            <p class="text-gray-400 text-sm leading-relaxed mt-2">
+                                Before delivery, frozen loins are expertly cut using band saws into your desired
+                                specifications: <strong class="text-white">Steaks, or Cubes</strong>, ready for
+                                immediate culinary use.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+    </div>
+    </section>
+
+    </div>
+
+    <footer class="bg-[#010912] pt-16 pb-8 px-6 border-t border-white/10 text-sm">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="md:col-span-1">
+                    <div class="text-2xl font-bold leading-tight text-white mb-6">Oceava</div>
+                    <p class="text-gray-500 mb-6 leading-relaxed">Thailand-based tuna import company with over Years of
+                        experience.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold uppercase tracking-widest mb-6">Company</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li><a href="about.html" class="hover:text-ocean-accent transition">About Us</a></li>
+                        <li><a href="team.html" class="hover:text-ocean-accent transition">Our Team</a></li>
+                        <li><a href="#" class="hover:text-ocean-accent transition">Careers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold uppercase tracking-widest mb-6">Support</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li><a href="contact.html" class="hover:text-ocean-accent transition">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-ocean-accent transition">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold uppercase tracking-widest mb-6">Get in Touch</h4>
+                    <p class="text-gray-400 mb-4">111/222 Bangsue<br>Bangkok, 10800</p>
+                    <p class="text-white font-bold">oceavastaff@oceava.com</p>
+                    <p class="text-white font-bold">+66 555 8888</p>
+                </div>
+            </div>
+            <div
+                class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-600">
+                <p>© 2025 Oceava Company. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            if (loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    AOS.refresh();
+                }, 500);
+            }
+        });
+
+        // Simple Thumbnail Switcher
+        const mainImg = document.querySelector('.group > img');
+        const thumbs = document.querySelectorAll('.thumb-img');
+
+        thumbs.forEach(thumb => {
+            thumb.addEventListener('click', function () {
+                // Update Main Image source
+                mainImg.src = this.src;
+
+                // Active State Styling
+                thumbs.forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+
+    <script>
+        // Mobile Menu Toggle Logic
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = menuBtn.querySelector('i');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+
+            // เปลี่ยนไอคอนจาก ขีด (bars) เป็น กากบาท (times)
+            if (mobileMenu.classList.contains('hidden')) {
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            } else {
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-times');
+            }
+        });
+    </script>
+
+</body>
+
+</html>

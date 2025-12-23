@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Oceava</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ocean: {
+                            dark: '#020b16',
+                            card: 'rgba(10, 25, 41, 0.7)',
+                            accent: '#d4af37',
+                            gold: {
+                                100: '#f9f1d8',
+                                300: '#e6cf8b',
+                                500: '#d4af37',
+                                700: '#997b1e',
+                            }
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        thai: ['Prompt', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base Styles */
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100%;
+            background-color: #020b16;
+            color: white;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Text Gradients */
+        .text-gold-gradient {
+            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0px 2px 10px rgba(212, 175, 55, 0.2);
+        }
+
+        /* Glass Card Effect */
+        .glass-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: 0.3s;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Map Filter: Trick to make Google Maps look "Dark Mode" without API Key */
+        .map-container iframe {
+            filter: grayscale(100%) invert(92%) contrast(83%);
+            mix-blend-mode: hard-light;
+        }
+
+        .map-wrapper {
+            position: relative;
+            background-color: #020b16;
+            /* Fallback color */
+        }
+
+        /* Overlay to tint the map blue-ish */
+        .map-overlay {
+            pointer-events: none;
+            position: absolute;
+            inset: 0;
+            background: rgba(2, 11, 22, 0.3);
+            mix-blend-mode: color;
+        }
+
+        /* Form Input Styles */
+        .glass-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: 0.3s;
+        }
+
+        .glass-input:focus {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #d4af37;
+            outline: none;
+            box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+        }
+
+        /* Loader */
+        #loader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+
+            /* แก้ไข: เปลี่ยนจากสีดำ #000 เป็นการไล่เฉดสีน้ำเงินน้ำทะเล */
+            background: radial-gradient(circle, #0f4b6e 0%, #020b16 100%);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: monospace;
+            color: #d4af37;
+            letter-spacing: 2px;
+            transition: opacity 1s;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loader">
+        <img src="logo.png" alt="Loading..."
+            class="w-48 md:w-64 h-auto animate-pulse drop-shadow-[0_0_25px_rgba(212,175,55,0.6)]">
+    </div>
+
+    <div class="relative w-full flex flex-col pb-10">
+        <div class="absolute inset-0 bg-gradient-to-b from-[#0f4b6e] via-[#02203c] to-ocean-dark z-0"></div>
+
+        <nav class="relative z-50 w-full" data-aos="fade-down">
+            <div class="flex items-center justify-between px-6 md:px-8 py-6 max-w-7xl mx-auto">
+
+                <div class="flex items-center gap-4 drop-shadow-md">
+                    <img class="h-8 md:h-10 w-auto drop-shadow-lg" src="logo.png" alt="Logo" />
+                    <div class="leading-tight font-bold text-2xl md:text-3xl font-sans text-ocean-accent">Oceava</div>
+                </div>
+
+                <div
+                    class="hidden md:flex space-x-8 text-xs font-semibold tracking-widest uppercase text-white/90 drop-shadow-md">
+                    <a href="index.html" class="hover:text-ocean-accent transition">Home</a>
+                    <a href="about.html" class="hover:text-ocean-accent transition">About Us</a>
+                    <a href="products.html" class="hover:text-ocean-accent transition">Products</a>
+                    <a href="team.html" class="hover:text-ocean-accent transition">Our Team</a>
+                    <a href="news.html" class="hover:text-ocean-accent transition">News</a>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="contact.html"
+                        class="bg-ocean-accent text-ocean-dark px-6 py-2 text-xs font-bold uppercase tracking-wider hover:bg-white transition shadow-lg cursor-pointer">
+                        Contact Us
+                    </a>
+                </div>
+
+                <button id="mobile-menu-btn" class="md:hidden text-white text-2xl focus:outline-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <div id="mobile-menu"
+                class="hidden md:hidden absolute top-full left-0 w-full bg-[#020b16]/50 backdrop-blur-md border-t border-white/10 shadow-2xl transition-all duration-300 origin-top z-50">
+                <div class="flex flex-col p-6 space-y-4 text-center">
+                    <a href="index.html"
+                        class="text-white hover:text-ocean-accent font-bold uppercase tracking-wider text-sm py-2 border-b border-white/5">Home</a>
+                    <a href="about.html"
+                        class="text-white hover:text-ocean-accent font-bold uppercase tracking-wider text-sm py-2 border-b border-white/5">About
+                        Us</a>
+                    <a href="products.html"
+                        class="text-white hover:text-ocean-accent font-bold uppercase tracking-wider text-sm py-2 border-b border-white/5">Products</a>
+                    <a href="team.html"
+                        class="text-white hover:text-ocean-accent font-bold uppercase tracking-wider text-sm py-2 border-b border-white/5">Our
+                        Team</a>
+                    <a href="news.html"
+                        class="text-white hover:text-ocean-accent font-bold uppercase tracking-wider text-sm py-2 border-b border-white/5">News</a>
+
+                    <a href="contact.html"
+                        class="bg-ocean-accent text-ocean-dark px-6 py-3 mt-4 text-sm font-bold uppercase tracking-wider hover:bg-white transition shadow-lg inline-block w-full rounded">
+                        Get Quote
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="relative z-10 container mx-auto px-6 mt-12 text-center">
+            <p class="text-ocean-accent text-xs font-bold tracking-[0.3em] uppercase mb-4" data-aos="fade-up">ready to
+                help you</p>
+            <h1 class="text-4xl md:text-6xl font-medium tracking-wide font-sans text-white mb-6" data-aos="fade-up"
+                data-aos-delay="100">
+                Contact <span class="text-gold-gradient font-bold">Us</span>
+            </h1>
+            <p class="max-w-2xl mx-auto text-gray-300 font-light" data-aos="fade-up" data-aos-delay="200">
+                Have a question or interested in partnership? Reach out to our global team.
+            </p>
+        </div>
+    </div>
+
+    <div id="content-section" class="bg-ocean-dark relative z-20 border-t border-white/5 pt-20 pb-20">
+
+        <section class="container mx-auto px-6 -mt-10 relative z-30">
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+
+                <div class="lg:col-span-2">
+                    <div class="glass-card p-8 md:p-10 rounded-2xl h-full" data-aos="fade-left">
+                        <h2 class="text-2xl font-bold text-white mb-6">Send Message</h2>
+                        <form action="#" class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-gray-400 mb-2">Your
+                                        Name</label>
+                                    <input type="text" class="glass-input w-full p-4 rounded-lg focus:ring-0"
+                                        placeholder="Mr.Oceava">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-gray-400 mb-2">Email
+                                        Address</label>
+                                    <input type="email" class="glass-input w-full p-4 rounded-lg focus:ring-0"
+                                        placeholder="company@oceava.com">
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-gray-400 mb-2">Phone
+                                        Number</label>
+                                    <input type="tel" class="glass-input w-full p-4 rounded-lg focus:ring-0"
+                                        placeholder="+66 ...">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-gray-400 mb-2">Subject</label>
+                                    <select class="glass-input w-full p-4 rounded-lg focus:ring-0">
+                                        <option class="bg-ocean-dark text-gray-400">Select Topic</option>
+                                        <option class="bg-ocean-dark text-white">Wholesale Inquiry</option>
+                                        <option class="bg-ocean-dark text-white">Logistics Partnership</option>
+                                        <option class="bg-ocean-dark text-white">Other</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-gray-400 mb-2">Message</label>
+                                <textarea rows="5" class="glass-input w-full p-4 rounded-lg focus:ring-0"
+                                    placeholder="Tell us about your needs..."></textarea>
+                            </div>
+
+                            <div class="flex items-center justify-between pt-4">
+                                <p class="text-xs text-gray-500">By submitting this form, you agree to our privacy
+                                    policy.</p>
+                                <button type="button"
+                                    class="bg-ocean-accent text-ocean-dark px-10 py-4 rounded font-bold uppercase tracking-wider hover:bg-white transition duration-300 shadow-lg">
+                                    Send Message
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <div class="space-y-6">
+                    <div class="glass-card p-8 rounded-2xl" data-aos="fade-right" data-aos-delay="0">
+                        <div
+                            class="w-12 h-12 rounded-full bg-ocean-accent/10 flex items-center justify-center text-ocean-accent mb-4">
+                            <i class="fas fa-location-dot text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Headquarters</h3>
+                        <p class="text-gray-400 text-sm leading-relaxed">
+                            111/222 Bangsue District,<br>
+                            Bangkok, 10800<br>
+                            Thailand
+                        </p>
+                    </div>
+
+                    <div class="glass-card p-8 rounded-2xl" data-aos="fade-right" data-aos-delay="100">
+                        <div
+                            class="w-12 h-12 rounded-full bg-ocean-accent/10 flex items-center justify-center text-ocean-accent mb-4">
+                            <i class="fas fa-phone text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Direct Line</h3>
+                        <p class="text-gray-400 text-sm mb-1">Main: <span class="text-white">+66 555 8888</span></p>
+                        <p class="text-gray-400 text-sm">Support: <span class="text-white">+66 555 9999</span></p>
+                        <p class="text-xs text-ocean-accent mt-3">Mon - Fri, 09:00 - 18:00</p>
+                    </div>
+
+                    <div class="glass-card p-8 rounded-2xl" data-aos="fade-right" data-aos-delay="200">
+                        <div
+                            class="w-12 h-12 rounded-full bg-ocean-accent/10 flex items-center justify-center text-ocean-accent mb-4">
+                            <i class="fas fa-envelope text-xl"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-white mb-2">Email Us</h3>
+                        <p class="text-gray-400 text-sm mb-1">Sales: <a href="#"
+                                class="text-white hover:text-ocean-accent">sales@oceava.com</a></p>
+                        <p class="text-gray-400 text-sm">General: <a href="#"
+                                class="text-white hover:text-ocean-accent">info@oceava.com</a></p>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </section>
+
+        <section class="mt-20 relative w-full h-[500px] border-y border-white/10 overflow-hidden group">
+            <div class="map-wrapper w-full h-full">
+                <div class="map-container w-full h-full">
+                    <iframe
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3874.673648677464!2d100.52162931483095!3d13.805232990311756!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x30e29b876425712f%3A0x6697b003759239d5!2sBang%20Sue%2C%20Bangkok!5e0!3m2!1sen!2sth!4v1625555555555!5m2!1sen!2sth"
+                        width="100%" height="100%" style="border:0;" allowfullscreen="" loading="lazy">
+                    </iframe>
+                </div>
+                <div class="map-overlay"></div>
+
+                <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 pointer-events-none">
+                    <div
+                        class="bg-ocean-dark/90 backdrop-blur-md border border-ocean-accent/50 p-4 rounded-xl shadow-2xl flex items-center gap-4 animate-bounce">
+                        <img src="logo.png" class="h-8 w-auto">
+                        <div>
+                            <h4 class="text-white font-bold text-sm">Oceava HQ</h4>
+                            <p class="text-ocean-accent text-xs">Bang Sue, Bangkok</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="py-20 px-6 max-w-4xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-2xl font-bold text-white">Frequently Asked Questions</h2>
+            </div>
+
+            <div class="space-y-4">
+                <div class="glass-card p-6 rounded-lg cursor-pointer hover:border-ocean-accent transition"
+                    onclick="this.classList.toggle('active')">
+                    <h3 class="text-white font-bold flex justify-between items-center">
+                        What is the minimum order quantity (MOQ)?
+                        <i class="fas fa-chevron-down text-ocean-accent"></i>
+                    </h3>
+                    <p class="text-gray-400 text-sm mt-3 hidden">Our MOQ varies by product type. For fresh tuna loins,
+                        the MOQ is typically 50kg. For processed frozen goods, it's 100kg. Please contact sales for
+                        specific details.</p>
+                </div>
+                <div class="glass-card p-6 rounded-lg cursor-pointer hover:border-ocean-accent transition"
+                    onclick="this.classList.toggle('active')">
+                    <h3 class="text-white font-bold flex justify-between items-center">
+                        Do you provide delivery nationwide?
+                        <i class="fas fa-chevron-down text-ocean-accent"></i>
+                    </h3>
+                    <p class="text-gray-400 text-sm mt-3 hidden">Yes, we cover all major provinces in Thailand using
+                        temperature-controlled logistics partners to ensure freshness upon arrival.</p>
+                </div>
+                <div class="glass-card p-6 rounded-lg cursor-pointer hover:border-ocean-accent transition"
+                    onclick="this.classList.toggle('active')">
+                    <h3 class="text-white font-bold flex justify-between items-center">
+                        How can I become a supplier partner?
+                        <i class="fas fa-chevron-down text-ocean-accent"></i>
+                    </h3>
+                    <p class="text-gray-400 text-sm mt-3 hidden">We welcome suppliers who meet our strict sustainability
+                        and quality standards (MSC, HACCP). Please fill out the contact form with the subject "Other" to
+                        initiate a discussion.</p>
+                </div>
+            </div>
+        </section>
+
+    </div>
+
+    <footer class="bg-[#010912] pt-16 pb-8 px-6 border-t border-white/10 text-sm">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="md:col-span-1">
+                    <div class="text-2xl font-bold leading-tight text-white mb-6">Oceava</div>
+                    <p class="text-gray-500 mb-6 leading-relaxed">Thailand-based tuna import company with over Years of
+                        experience.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold uppercase tracking-widest mb-6">Company</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li><a href="about.html" class="hover:text-ocean-accent transition">About Us</a></li>
+                        <li><a href="team.html" class="hover:text-ocean-accent transition">Our Team</a></li>
+                        <li><a href="#" class="hover:text-ocean-accent transition">Careers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold uppercase tracking-widest mb-6">Support</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li><a href="#" class="text-ocean-accent transition">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-ocean-accent transition">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold uppercase tracking-widest mb-6">Get in Touch</h4>
+                    <p class="text-gray-400 mb-4">111/222 Bangsue<br>Bangkok, 10800</p>
+                    <p class="text-white font-bold">oceavastaff@oceava.com</p>
+                    <p class="text-white font-bold">+66 555 8888</p>
+                </div>
+            </div>
+            <div
+                class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-600">
+                <p>&copy; 2025 Oceava Company. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            if (loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    AOS.refresh();
+                }, 500);
+            }
+        });
+
+        // Simple Toggle Script for FAQ
+        document.querySelectorAll('.glass-card').forEach(card => {
+            card.addEventListener('click', function () {
+                const content = this.querySelector('p');
+                if (content && content.classList.contains('hidden')) {
+                    content.classList.remove('hidden');
+                    content.classList.add('block', 'animate-fade-in');
+                } else if (content) {
+                    content.classList.add('hidden');
+                    content.classList.remove('block');
+                }
+            });
+        });
+    </script>
+
+    <script>
+        // Mobile Menu Toggle Logic
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = menuBtn.querySelector('i');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+
+            // เปลี่ยนไอคอนจาก ขีด (bars) เป็น กากบาท (times)
+            if (mobileMenu.classList.contains('hidden')) {
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            } else {
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-times');
+            }
+        });
+    </script>
+
+</body>
+
+</html>

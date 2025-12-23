@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Industry Insights - Oceava</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ocean: {
+                            dark: '#020b16',
+                            card: 'rgba(10, 25, 41, 0.7)',
+                            accent: '#d4af37',
+                            gold: {
+                                100: '#f9f1d8',
+                                300: '#e6cf8b',
+                                500: '#d4af37',
+                                700: '#997b1e',
+                            }
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        thai: ['Prompt', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base Styles */
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100%;
+            background-color: #020b16;
+            color: white;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Text Gradients */
+        .text-gold-gradient {
+            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0px 2px 10px rgba(212, 175, 55, 0.2);
+        }
+
+        /* Glass Card Effect */
+        .glass-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: 0.3s;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Active Filter Button Style */
+        .filter-btn.active {
+            background-color: #d4af37;
+            /* ocean-accent */
+            color: #020b16;
+            /* ocean-dark */
+            font-weight: 700;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
+            border: none;
+        }
+
+        /* Inactive Filter Button Style */
+        .filter-btn:not(.active) {
+            /* Styles handled by glass-card classes inline, but we ensure text is light */
+            color: #d1d5db;
+            /* gray-300 */
+        }
+
+        .filter-btn:not(.active):hover {
+            color: white;
+            border-color: #d4af37;
+        }
+
+
+        /* Image Hover Zoom */
+        .group:hover .img-zoom {
+            transform: scale(1.1);
+        }
+
+        /* Hide Scrollbar for filter menu */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
+
+        /* Loader */
+        #loader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            background: radial-gradient(circle, #0f4b6e 0%, #020b16 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: opacity 1s;
+        }
+
+        /* Filter Animation */
+        .article-card {
+            transition: all 0.5s ease;
+        }
+
+        .article-card.hidden-card {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loader">
+        <img src="logo.png" alt="Loading..."
+            class="w-48 md:w-64 h-auto animate-pulse drop-shadow-[0_0_25px_rgba(212,175,55,0.6)]">
+    </div>
+
+    <div class="relative w-full flex flex-col pb-5 min-h-[30vh]">
+        <div class="absolute inset-0 bg-gradient-to-b from-[#0f4b6e] via-[#02203c] to-ocean-dark z-0"></div>
+
+
+        <nav class="relative z-50 w-full" data-aos="fade-down">
+            <div class="flex items-center justify-between px-6 md:px-8 py-6 max-w-7xl mx-auto">
+                <div class="flex items-center gap-4 drop-shadow-md">
+                    <img class="h-8 md:h-10 w-auto drop-shadow-lg" src="logo.png" alt="Logo" />
+                    <div class="leading-tight font-bold text-2xl md:text-3xl font-sans text-ocean-accent">Oceava</div>
+                </div>
+
+                <div
+                    class="hidden md:flex space-x-8 text-xs font-semibold tracking-widest uppercase text-white/90 drop-shadow-md">
+                    <a href="index.html" class="hover:text-ocean-accent transition">Home</a>
+                    <a href="about.html" class="hover:text-ocean-accent transition">About Us</a>
+                    <a href="products.html" class="hover:text-ocean-accent transition">Products</a>
+                    <a href="team.html" class="hover:text-ocean-accent transition">Our Team</a>
+                    <a href="news.html" class="text-ocean-accent transition">News</a>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="contact.html"
+                        class="bg-ocean-accent text-ocean-dark px-6 py-2 text-xs font-bold uppercase tracking-wider hover:bg-white transition shadow-lg cursor-pointer">
+                        Contact Us
+                    </a>
+                </div>
+
+                <button id="mobile-menu-btn" class="md:hidden text-white text-2xl focus:outline-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <div id="mobile-menu"
+                class="hidden md:hidden absolute top-full left-0 w-full bg-[#020b16]/50 backdrop-blur-md border-t border-white/10 shadow-2xl transition-all duration-300 origin-top z-50">
+                <div class="flex flex-col p-6 space-y-4 text-center">
+                    <a href="products.html"
+                        class="text-white hover:text-ocean-accent font-bold uppercase tracking-wider text-sm py-2">Products</a>
+                    <a href="news.html"
+                        class="text-ocean-accent font-bold uppercase tracking-wider text-sm py-2">News</a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="relative z-10 container mx-auto px-6 mt-20 text-center">
+            <p class="text-ocean-accent text-xs font-bold tracking-[0.3em] uppercase mb-4" data-aos="fade-up">
+                Knowledge Hub
+            </p>
+            <h1 class="text-4xl md:text-6xl font-medium tracking-wide font-sans text-white mb-6" data-aos="fade-up"
+                data-aos-delay="100">
+                Industry <span class="text-gold-gradient font-bold">Insights</span>
+            </h1>
+            <p class="max-w-2xl mx-auto text-gray-200 font-light text-lg" data-aos="fade-up" data-aos-delay="200">
+                Updates on the global seafood market, sustainable fishing trends, and expert culinary knowledge.
+            </p>
+        </div>
+    </div>
+
+    <div id="content-section" class="bg-ocean-dark relative z-20 border-t border-white/5 pb-20">
+
+        <section class="py-16 px-6">
+            <div class="max-w-7xl mx-auto">
+
+                <div class="flex justify-center mb-12" data-aos="fade-up">
+                    <div class="flex gap-3 overflow-x-auto pb-4 md:pb-0 w-full md:w-auto no-scrollbar px-4">
+                        <button
+                            class="filter-btn active px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 whitespace-nowrap"
+                            data-filter="all">
+                            All Posts
+                        </button>
+                        <button
+                            class="filter-btn glass-card px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 whitespace-nowrap"
+                            data-filter="market">
+                            Market News
+                        </button>
+                        <button
+                            class="filter-btn glass-card px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 whitespace-nowrap"
+                            data-filter="sustainability">
+                            Sustainability
+                        </button>
+                        <button
+                            class="filter-btn glass-card px-6 py-2 rounded-full text-sm font-medium transition-all duration-300 whitespace-nowrap"
+                            data-filter="recipes">
+                            Recipes
+                        </button>
+                    </div>
+                </div>
+
+                <div id="articles-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+                    <article class="article-card glass-card rounded-xl overflow-hidden group h-full flex flex-col"
+                        data-category="sustainability" data-aos="fade-up" data-aos-delay="0">
+                        <div class="relative h-60 overflow-hidden">
+                            <span
+                                class="absolute top-3 left-3 bg-green-900/80 text-green-400 text-[10px] font-bold px-3 py-1 rounded border border-green-500/30 z-10 uppercase tracking-wider shadow-lg backdrop-blur-sm">
+                                Sustainability
+                            </span>
+                            <img src="https://images.unsplash.com/photo-1566827207432-a485a6c1e723?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                class="img-zoom w-full h-full object-cover transition-transform duration-700"
+                                alt="Fishing Boat">
+                        </div>
+
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="flex items-center text-xs text-gray-400 mb-3 space-x-2 font-sans">
+                                <span>Dec 22, 2025</span>
+                                <span class="text-ocean-accent">•</span>
+                                <span>5 min read</span>
+                            </div>
+
+                            <h3
+                                class="text-xl font-bold text-white mb-3 group-hover:text-ocean-accent transition-colors line-clamp-2">
+                                The Future of Tuna: Why Hand-line Fishing Matters
+                            </h3>
+
+                            <p class="text-gray-400 text-sm mb-4 line-clamp-3 flex-grow font-light">
+                                A deep dive into eco-friendly fishing methods and why the global market is willing to
+                                pay a premium for true sustainability.
+                            </p>
+
+                            <div class="flex items-center justify-between mt-auto pt-4 border-t border-white/10">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-gray-700 overflow-hidden border border-white/10">
+                                        <img src="https://placehold.co/100x100/333/fff?text=A"
+                                            class="w-full h-full object-cover" alt="Author">
+                                    </div>
+                                    <span class="text-xs font-medium text-gray-300">Admin</span>
+                                </div>
+                                <a href="#"
+                                    class="text-ocean-accent font-bold text-xs uppercase tracking-wider hover:text-white transition flex items-center gap-1 group/link">
+                                    Read More
+                                    <i
+                                        class="fas fa-arrow-right transform group-hover/link:translate-x-1 transition-transform"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="article-card glass-card rounded-xl overflow-hidden group h-full flex flex-col"
+                        data-category="market" data-aos="fade-up" data-aos-delay="100">
+                        <div class="relative h-60 overflow-hidden">
+                            <span
+                                class="absolute top-3 left-3 bg-blue-900/80 text-blue-300 text-[10px] font-bold px-3 py-1 rounded border border-blue-500/30 z-10 uppercase tracking-wider shadow-lg backdrop-blur-sm">
+                                Market Trends
+                            </span>
+                            <img src="https://images.unsplash.com/photo-1656077217715-bdaeb06bd01f?q=80&w=1064&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                class="img-zoom w-full h-full object-cover transition-transform duration-700"
+                                alt="Market Graph">
+                        </div>
+
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="flex items-center text-xs text-gray-400 mb-3 space-x-2 font-sans">
+                                <span>Dec 20, 2025</span>
+                                <span class="text-ocean-accent">•</span>
+                                <span>3 min read</span>
+                            </div>
+
+                            <h3
+                                class="text-xl font-bold text-white mb-3 group-hover:text-ocean-accent transition-colors line-clamp-2">
+                                Global Tuna Price Forecast: Q1 2026 Analysis
+                            </h3>
+
+                            <p class="text-gray-400 text-sm mb-4 line-clamp-3 flex-grow font-light">
+                                Analyzing Yellowfin and Bluefin price trends in Japanese and European markets. How fuel
+                                costs and logistics are impacting supply.
+                            </p>
+
+                            <div class="flex items-center justify-between mt-auto pt-4 border-t border-white/10">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-gray-700 overflow-hidden border border-white/10">
+                                        <img src="https://placehold.co/100x100/555/fff?text=K"
+                                            class="w-full h-full object-cover" alt="Author">
+                                    </div>
+                                    <span class="text-xs font-medium text-gray-300">Kenji M.</span>
+                                </div>
+                                <a href="#"
+                                    class="text-ocean-accent font-bold text-xs uppercase tracking-wider hover:text-white transition flex items-center gap-1 group/link">
+                                    Read More
+                                    <i
+                                        class="fas fa-arrow-right transform group-hover/link:translate-x-1 transition-transform"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="article-card glass-card rounded-xl overflow-hidden group h-full flex flex-col"
+                        data-category="recipes" data-aos="fade-up" data-aos-delay="200">
+                        <div class="relative h-60 overflow-hidden">
+                            <span
+                                class="absolute top-3 left-3 bg-orange-900/80 text-orange-300 text-[10px] font-bold px-3 py-1 rounded border border-orange-500/30 z-10 uppercase tracking-wider shadow-lg backdrop-blur-sm">
+                                Recipes
+                            </span>
+                            <img src="https://images.unsplash.com/photo-1501595091296-3aa970afb3ff?q=80&w=2070&auto=format&fit=crop"
+                                class="img-zoom w-full h-full object-cover transition-transform duration-700"
+                                alt="Tuna Dish">
+                        </div>
+
+                        <div class="p-6 flex flex-col flex-grow">
+                            <div class="flex items-center text-xs text-gray-400 mb-3 space-x-2 font-sans">
+                                <span>Dec 15, 2025</span>
+                                <span class="text-ocean-accent">•</span>
+                                <span>8 min read</span>
+                            </div>
+
+                            <h3
+                                class="text-xl font-bold text-white mb-3 group-hover:text-ocean-accent transition-colors line-clamp-2">
+                                The Secret to the Perfect Medium-Rare Tuna Steak
+                            </h3>
+
+                            <p class="text-gray-400 text-sm mb-4 line-clamp-3 flex-grow font-light">
+                                Master the technique of preparation, marinating, and heat control to achieve a juicy,
+                                restaurant-quality tuna steak at home.
+                            </p>
+
+                            <div class="flex items-center justify-between mt-auto pt-4 border-t border-white/10">
+                                <div class="flex items-center gap-3">
+                                    <div
+                                        class="w-8 h-8 rounded-full bg-gray-700 overflow-hidden border border-white/10">
+                                        <img src="https://placehold.co/100x100/777/fff?text=C"
+                                            class="w-full h-full object-cover" alt="Author">
+                                    </div>
+                                    <span class="text-xs font-medium text-gray-300">Chef Ploy</span>
+                                </div>
+                                <a href="#"
+                                    class="text-ocean-accent font-bold text-xs uppercase tracking-wider hover:text-white transition flex items-center gap-1 group/link">
+                                    Read More
+                                    <i
+                                        class="fas fa-arrow-right transform group-hover/link:translate-x-1 transition-transform"></i>
+                                </a>
+                            </div>
+                        </div>
+                    </article>
+
+                </div>
+
+                <div class="mt-16 text-center" data-aos="zoom-in">
+                    <button
+                        class="glass-card px-8 py-3 rounded text-sm font-bold uppercase tracking-wider text-white hover:bg-white hover:text-ocean-dark transition-all duration-300 shadow-lg border-ocean-accent/50">
+                        Load More Articles
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+    </div>
+
+    <footer class="bg-[#010912] pt-16 pb-8 px-6 border-t border-white/10 text-sm">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="md:col-span-1">
+                    <div class="text-2xl font-bold leading-tight text-white mb-6">Oceava</div>
+                    <p class="text-gray-500 mb-6 leading-relaxed">Thailand-based tuna import company with over 15 years
+                        of experience delivering premium seafood worldwide.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold uppercase tracking-widest mb-6">Company</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li><a href="about.html" class="hover:text-ocean-accent transition">About Us</a></li>
+                        <li><a href="team.html" class="hover:text-ocean-accent transition">Our Team</a></li>
+                        <li><a href="#" class="hover:text-ocean-accent transition">Careers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold uppercase tracking-widest mb-6">Support</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li><a href="contact.html" class="hover:text-ocean-accent transition">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-ocean-accent transition">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold uppercase tracking-widest mb-6">Get in Touch</h4>
+                    <p class="text-gray-400 mb-4">111/222 Bangsue<br>Bangkok, 10800</p>
+                    <p class="text-white font-bold">oceavastaff@oceava.com</p>
+                    <p class="text-white font-bold">+66 555 8888</p>
+                </div>
+            </div>
+            <div
+                class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-600">
+                <p>© 2025 Oceava Company. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        // Init Animation Library
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+
+        // Preloader Logic
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            if (loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    AOS.refresh();
+                }, 500);
+            }
+        });
+
+        // Mobile Menu Logic
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = menuBtn.querySelector('i');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+            if (mobileMenu.classList.contains('hidden')) {
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            } else {
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-times');
+            }
+        });
+
+        // --- FILTER FUNCTIONALITY ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            const articleCards = document.querySelectorAll('.article-card');
+
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // 1. Remove active class from all buttons
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    // 1.1 Also remove glass-card style from active button if we want distinct look
+                    // In this CSS setup, .active overrides default styles, so we just toggle 'active'
+
+                    // 2. Add active class to clicked button
+                    btn.classList.add('active');
+
+                    // 3. Get filter value
+                    const filterValue = btn.getAttribute('data-filter');
+
+                    // 4. Loop through cards
+                    articleCards.forEach(card => {
+                        const cardCategory = card.getAttribute('data-category');
+
+                        if (filterValue === 'all' || filterValue === cardCategory) {
+                            // Show card
+                            card.classList.remove('hidden-card');
+                            // Re-trigger AOS animation if needed (optional)
+                            card.classList.add('aos-animate');
+                        } else {
+                            // Hide card
+                            card.classList.add('hidden-card');
+                            card.classList.remove('aos-animate');
+                        }
+                    });
+
+                    // Refresh AOS layout positions
+                    setTimeout(() => {
+                        AOS.refresh();
+                    }, 500);
+                });
+            });
+        });
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Products - Oceava</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Prompt:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        ocean: {
+                            dark: '#020b16',
+                            card: 'rgba(10, 25, 41, 0.7)',
+                            accent: '#d4af37',
+                            gold: {
+                                100: '#f9f1d8',
+                                300: '#e6cf8b',
+                                500: '#d4af37',
+                                700: '#997b1e',
+                            }
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        thai: ['Prompt', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Base Styles */
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100%;
+            background-color: #020b16;
+            color: white;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+            font-family: 'Inter', sans-serif;
+        }
+
+        /* Text Gradients */
+        .text-gold-gradient {
+            background: linear-gradient(to right, #bf953f, #fcf6ba, #b38728, #fbf5b7, #aa771c);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0px 2px 10px rgba(212, 175, 55, 0.2);
+        }
+
+        /* Glass Card Effect */
+        .glass-card {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: 0.3s;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(212, 175, 55, 0.4);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Image Hover Zoom */
+        .group:hover .img-zoom {
+            transform: scale(1.1);
+        }
+
+        /* Loader */
+        #loader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+
+            /* แก้ไข: เปลี่ยนจากสีดำ #000 เป็นการไล่เฉดสีน้ำเงินน้ำทะเล */
+            background: radial-gradient(circle, #0f4b6e 0%, #020b16 100%);
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: monospace;
+            color: #d4af37;
+            letter-spacing: 2px;
+            transition: opacity 1s;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="loader">
+        <img src="logo.png" alt="Loading..."
+            class="w-48 md:w-64 h-auto animate-pulse drop-shadow-[0_0_25px_rgba(212,175,55,0.6)]">
+    </div>
+
+    <div class="relative w-full flex flex-col pb-10">
+        <div class="absolute inset-0 bg-gradient-to-b from-[#0f4b6e] via-[#02203c] to-ocean-dark z-0"></div>
+
+        <nav class="relative z-50 w-full" data-aos="fade-down">
+            <div class="flex items-center justify-between px-6 md:px-8 py-6 max-w-7xl mx-auto">
+
+                <div class="flex items-center gap-4 drop-shadow-md">
+                    <img class="h-8 md:h-10 w-auto drop-shadow-lg" src="logo.png" alt="Logo" />
+                    <div class="leading-tight font-bold text-2xl md:text-3xl font-sans text-ocean-accent">Oceava</div>
+                </div>
+
+                <div
+                    class="hidden md:flex space-x-8 text-xs font-semibold tracking-widest uppercase text-white/90 drop-shadow-md">
+                    <a href="index.html" class="hover:text-ocean-accent transition">Home</a>
+                    <a href="about.html" class="hover:text-ocean-accent transition">About Us</a>
+                    <a href="products.html" class="hover:text-ocean-accent transition">Products</a>
+                    <a href="team.html" class="hover:text-ocean-accent transition">Our Team</a>
+                    <a href="news.html" class="hover:text-ocean-accent transition">News</a>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-6">
+                    <a href="contact.html"
+                        class="bg-ocean-accent text-ocean-dark px-6 py-2 text-xs font-bold uppercase tracking-wider hover:bg-white transition shadow-lg cursor-pointer">
+                        Contact Us
+                    </a>
+                </div>
+
+                <button id="mobile-menu-btn" class="md:hidden text-white text-2xl focus:outline-none">
+                    <i class="fas fa-bars"></i>
+                </button>
+            </div>
+
+            <div id="mobile-menu"
+                class="hidden md:hidden absolute top-full left-0 w-full bg-[#020b16]/50 backdrop-blur-md border-t border-white/10 shadow-2xl transition-all duration-300 origin-top z-50">
+                <div class="flex flex-col p-6 space-y-4 text-center">
+                    <a href="index.html"
+                        class="text-white hover:text-ocean-accent font-bold uppercase tracking-wider text-sm py-2 border-b border-white/5">Home</a>
+                    <a href="about.html"
+                        class="text-white hover:text-ocean-accent font-bold uppercase tracking-wider text-sm py-2 border-b border-white/5">About
+                        Us</a>
+                    <a href="products.html"
+                        class="text-white hover:text-ocean-accent font-bold uppercase tracking-wider text-sm py-2 border-b border-white/5">Products</a>
+                    <a href="team.html"
+                        class="text-white hover:text-ocean-accent font-bold uppercase tracking-wider text-sm py-2 border-b border-white/5">Our
+                        Team</a>
+                    <a href="news.html"
+                        class="text-white hover:text-ocean-accent font-bold uppercase tracking-wider text-sm py-2 border-b border-white/5">News</a>
+
+                    <a href="contact.html"
+                        class="bg-ocean-accent text-ocean-dark px-6 py-3 mt-4 text-sm font-bold uppercase tracking-wider hover:bg-white transition shadow-lg inline-block w-full rounded">
+                        Get Quote
+                    </a>
+                </div>
+            </div>
+        </nav>
+
+        <div class="relative z-10 container mx-auto px-6 mt-12 text-center">
+            <p class="text-ocean-accent text-xs font-bold tracking-[0.3em] uppercase mb-4" data-aos="fade-up">
+                World-Class Selections</p>
+            <h1 class="text-4xl md:text-6xl font-medium tracking-wide font-sans text-white mb-6" data-aos="fade-up"
+                data-aos-delay="100">
+                Our Premium <span class="text-gold-gradient font-bold">Product</span>
+            </h1>
+            <p class="max-w-2xl mx-auto text-gray-300 font-light" data-aos="fade-up" data-aos-delay="200">
+                Selecting the finest ingredients from oceans worldwide, delivered straight to your kitchen.
+            </p>
+        </div>
+    </div>
+
+    <div id="content-section" class="bg-ocean-dark relative z-20 border-t border-white/5 pb-20">
+
+        <section class="py-16 px-6">
+            <div class="max-w-7xl mx-auto">
+
+                <div class="flex items-end justify-between mb-12 border-b border-white/10 pb-4" data-aos="fade-right">
+                    <div>
+                        <span class="text-ocean-accent text-xs font-bold tracking-widest uppercase mb-2 block">Category
+                            01</span>
+                        <h2 class="text-3xl font-bold text-white">The Tuna Specialists</h2>
+                    </div>
+                    <p class="text-gray-400 text-sm hidden md:block max-w-md text-right">
+                        We are tuna experts, importing from the best sources with strict temperature control from origin
+                        to destination.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+                    <div class="glass-card rounded-xl overflow-hidden group h-full flex flex-col" data-aos="fade-up"
+                        data-aos-delay="0">
+                        <div class="relative h-60 overflow-hidden">
+                            <span
+                                class="absolute top-3 right-3 bg-ocean-dark/80 text-ocean-accent text-[10px] font-bold px-2 py-1 rounded border border-ocean-accent z-10">OMAKASE
+                                GRADE</span>
+                            <img src="https://images.unsplash.com/photo-1544551763-77ef2d0cfc6c?q=80&w=2070&auto=format&fit=crop"
+                                class="img-zoom w-full h-full object-cover transition-transform duration-700"
+                                alt="Bluefin Tuna">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-bold text-white mb-2">Bluefin Tuna (Hon Maguro)</h3>
+                            <p class="text-gray-400 text-xs mb-4 line-clamp-3">
+                                The King of Tuna. Melt-in-your-mouth texture with beautiful marbling
+                                (Otoro/Chutoro/Akami). Perfect for premium sashimi.
+                            </p>
+
+                            <div class="mt-auto space-y-3">
+                                <div
+                                    class="flex justify-between items-center text-sm font-bold text-ocean-accent border-t border-white/10 pt-3">
+                                    <span>Est. Price:</span>
+                                    <span>฿2,800 - ฿3,500 / kg</span>
+                                </div>
+                                <div class="flex justify-between items-center text-xs text-gray-500">
+                                    <span>Origin: Japan/Spain</span>
+                                    <button
+                                        class="text-white hover:text-ocean-accent transition uppercase font-bold">View
+                                        Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-xl overflow-hidden group h-full flex flex-col" data-aos="fade-up"
+                        data-aos-delay="100">
+                        <div class="relative h-60 overflow-hidden">
+                            <span
+                                class="absolute top-3 right-3 bg-green-900/80 text-green-400 text-[10px] font-bold px-2 py-1 rounded border border-green-500/30 z-10">BEST
+                                SELLER</span>
+                            <img src="https://images.unsplash.com/photo-1609529666719-1d61af4bb351?q=80&w=687&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                class="img-zoom w-full h-full object-cover transition-transform duration-700"
+                                alt="Yellowfin Tuna">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-bold text-white mb-2">Yellowfin Tuna Loin</h3>
+                            <p class="text-gray-400 text-xs mb-4 line-clamp-3">
+                                Fresh red meat with mild flavor, firm texture, and low fat. Ideal for steaks or
+                                affordable sushi options.
+                            </p>
+
+                            <div class="mt-auto space-y-3">
+                                <div
+                                    class="flex justify-between items-center text-sm font-bold text-ocean-accent border-t border-white/10 pt-3">
+                                    <span>Est. Price:</span>
+                                    <span>฿800 - ฿950 / kg</span>
+                                </div>
+                                <div class="flex justify-between items-center text-xs text-gray-500">
+                                    <span>Origin: Maldives/Indo</span>
+                                    <button
+                                        class="text-white hover:text-ocean-accent transition uppercase font-bold">View
+                                        Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-xl overflow-hidden group h-full flex flex-col" data-aos="fade-up"
+                        data-aos-delay="200">
+                        <div class="relative h-60 overflow-hidden">
+                            <span
+                                class="absolute top-3 right-3 bg-gray-900/80 text-gray-300 text-[10px] font-bold px-2 py-1 rounded border border-gray-500/30 z-10">SASHIMI
+                                GRADE</span>
+                            <img src="https://images.unsplash.com/photo-1562053923-52d3ebb09d31?q=80&w=1170&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                class="img-zoom w-full h-full object-cover transition-transform duration-700"
+                                alt="Bigeye Tuna">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-bold text-white mb-2">Bigeye Tuna</h3>
+                            <p class="text-gray-400 text-xs mb-4 line-clamp-3">
+                                Deep red color with a richer flavor profile than Yellowfin. An excellent choice for
+                                high-quality Japanese restaurants.
+                            </p>
+
+                            <div class="mt-auto space-y-3">
+                                <div
+                                    class="flex justify-between items-center text-sm font-bold text-ocean-accent border-t border-white/10 pt-3">
+                                    <span>Est. Price:</span>
+                                    <span>฿1,100 - ฿1,300 / kg</span>
+                                </div>
+                                <div class="flex justify-between items-center text-xs text-gray-500">
+                                    <span>Origin: Pacific Ocean</span>
+                                    <button
+                                        class="text-white hover:text-ocean-accent transition uppercase font-bold">View
+                                        Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-xl overflow-hidden group h-full flex flex-col" data-aos="fade-up"
+                        data-aos-delay="300">
+                        <div class="relative h-60 overflow-hidden">
+                            <span
+                                class="absolute top-3 right-3 bg-blue-900/80 text-blue-300 text-[10px] font-bold px-2 py-1 rounded border border-blue-500/30 z-10">INDUSTRIAL</span>
+                            <img src="https://images.unsplash.com/photo-1697030891256-36a3770cddde?q=80&w=1365&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+                                class="img-zoom w-full h-full object-cover transition-transform duration-700"
+                                alt="Skipjack Tuna">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-bold text-white mb-2">Skipjack (Bonito)</h3>
+                            <p class="text-gray-400 text-xs mb-4 line-clamp-3">
+                                Sold in bulk for industrial processing, canning, or dried fish (Katsuobushi) production.
+                                High volume availability.
+                            </p>
+
+                            <div class="mt-auto space-y-3">
+                                <div
+                                    class="flex justify-between items-center text-sm font-bold text-ocean-accent border-t border-white/10 pt-3">
+                                    <span>Est. Price:</span>
+                                    <span>฿150 - ฿190 / kg</span>
+                                </div>
+                                <div class="flex justify-between items-center text-xs text-gray-500">
+                                    <span>Form: Whole Round</span>
+                                    <button
+                                        class="text-white hover:text-ocean-accent transition uppercase font-bold">View
+                                        Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 px-6 bg-white/5">
+            <div class="max-w-7xl mx-auto">
+
+                <div class="flex items-end justify-between mb-12 border-b border-white/10 pb-4" data-aos="fade-right">
+                    <div>
+                        <span class="text-ocean-accent text-xs font-bold tracking-widest uppercase mb-2 block">Category
+                            02</span>
+                        <h2 class="text-3xl font-bold text-white">Ocean Treasures (Seafood)</h2>
+                    </div>
+                    <p class="text-gray-400 text-sm hidden md:block max-w-md text-right">
+                        Other premium seafood curated to meet the diverse needs of restaurants and culinary experts.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+
+                    <div class="glass-card rounded-xl overflow-hidden group h-full flex flex-col" data-aos="fade-up"
+                        data-aos-delay="0">
+                        <div class="relative h-60 overflow-hidden">
+                            <span
+                                class="absolute top-3 right-3 bg-orange-900/80 text-orange-300 text-[10px] font-bold px-2 py-1 rounded border border-orange-500/30 z-10">FRESH
+                                ARRIVAL</span>
+                            <img src="https://images.unsplash.com/photo-1599084993091-1cb5c0721cc6?q=80&w=2070&auto=format&fit=crop"
+                                class="img-zoom w-full h-full object-cover transition-transform duration-700"
+                                alt="Atlantic Salmon">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-bold text-white mb-2">Atlantic Salmon</h3>
+                            <p class="text-gray-400 text-xs mb-4 line-clamp-3">
+                                Fresh Norwegian Salmon with beautiful fat lines. Soft texture, suitable for both sashimi
+                                and grilling.
+                            </p>
+
+                            <div class="mt-auto space-y-3">
+                                <div
+                                    class="flex justify-between items-center text-sm font-bold text-ocean-accent border-t border-white/10 pt-3">
+                                    <span>Est. Price:</span>
+                                    <span>฿450 - ฿600 / kg</span>
+                                </div>
+                                <div class="flex justify-between items-center text-xs text-gray-500">
+                                    <span>Origin: Norway</span>
+                                    <button
+                                        class="text-white hover:text-ocean-accent transition uppercase font-bold">View
+                                        Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-xl overflow-hidden group h-full flex flex-col" data-aos="fade-up"
+                        data-aos-delay="100">
+                        <div class="relative h-60 overflow-hidden">
+                            <span
+                                class="absolute top-3 right-3 bg-ocean-dark/80 text-white text-[10px] font-bold px-2 py-1 rounded border border-white/20 z-10">JAPANESE
+                                IMPORT</span>
+                            <img src="f2.png"
+                                class="img-zoom w-full h-full object-cover transition-transform duration-700"
+                                alt="Hamachi">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-bold text-white mb-2">Hamachi (Yellowtail)</h3>
+                            <p class="text-gray-400 text-xs mb-4 line-clamp-3">
+                                Pinkish-white meat, sweet and rich flavor with a crunchy texture. Highly popular for
+                                premium sushi and sashimi menus.
+                            </p>
+
+                            <div class="mt-auto space-y-3">
+                                <div
+                                    class="flex justify-between items-center text-sm font-bold text-ocean-accent border-t border-white/10 pt-3">
+                                    <span>Est. Price:</span>
+                                    <span>฿900 - ฿1,200 / kg</span>
+                                </div>
+                                <div class="flex justify-between items-center text-xs text-gray-500">
+                                    <span>Origin: Japan</span>
+                                    <button
+                                        class="text-white hover:text-ocean-accent transition uppercase font-bold">View
+                                        Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-xl overflow-hidden group h-full flex flex-col" data-aos="fade-up"
+                        data-aos-delay="200">
+                        <div class="relative h-60 overflow-hidden">
+                            <img src="f3.png"
+                                class="img-zoom w-full h-full object-cover transition-transform duration-700"
+                                alt="Hokkaido Scallops">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-bold text-white mb-2">Hokkaido Scallops</h3>
+                            <p class="text-gray-400 text-xs mb-4 line-clamp-3">
+                                Large Hokkaido Hotate Scallops. Bouncy texture and naturally sweet. Sashimi Grade
+                                quality.
+                            </p>
+
+                            <div class="mt-auto space-y-3">
+                                <div
+                                    class="flex justify-between items-center text-sm font-bold text-ocean-accent border-t border-white/10 pt-3">
+                                    <span>Est. Price:</span>
+                                    <span>฿1,500 - ฿1,800 / kg</span>
+                                </div>
+                                <div class="flex justify-between items-center text-xs text-gray-500">
+                                    <span>Origin: Hokkaido</span>
+                                    <button
+                                        class="text-white hover:text-ocean-accent transition uppercase font-bold">View
+                                        Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="glass-card rounded-xl overflow-hidden group h-full flex flex-col" data-aos="fade-up"
+                        data-aos-delay="300">
+                        <div class="relative h-60 overflow-hidden">
+                            <span
+                                class="absolute top-3 right-3 bg-red-900/80 text-red-300 text-[10px] font-bold px-2 py-1 rounded border border-red-500/30 z-10">FROZEN</span>
+                            <img src="f4.png"
+                                class="img-zoom w-full h-full object-cover transition-transform duration-700"
+                                alt="Unagi Kabayaki">
+                        </div>
+                        <div class="p-6 flex flex-col flex-grow">
+                            <h3 class="text-xl font-bold text-white mb-2">Unagi Kabayaki</h3>
+                            <p class="text-gray-400 text-xs mb-4 line-clamp-3">
+                                Frozen Kabayaki Eel, ready to eat. Rich flavor and melt-in-your-mouth texture.
+                                Convenient for restaurants.
+                            </p>
+
+                            <div class="mt-auto space-y-3">
+                                <div
+                                    class="flex justify-between items-center text-sm font-bold text-ocean-accent border-t border-white/10 pt-3">
+                                    <span>Est. Price:</span>
+                                    <span>฿850 - ฿1,100 / kg</span>
+                                </div>
+                                <div class="flex justify-between items-center text-xs text-gray-500">
+                                    <span>Type: Processed</span>
+                                    <button
+                                        class="text-white hover:text-ocean-accent transition uppercase font-bold">View
+                                        Details</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="py-16 px-6 text-center">
+            <div class="max-w-3xl mx-auto glass-card p-10 rounded-2xl border border-ocean-accent/30" data-aos="zoom-in">
+                <h2 class="text-2xl md:text-3xl font-bold text-white mb-4">Can't find what you're looking for?</h2>
+                <p class="text-gray-400 mb-8">We have a global network of suppliers. If you need special ingredients,
+                    contact our sales team directly.</p>
+                <a href="contact.html"
+                    class="inline-block bg-ocean-accent text-ocean-dark px-8 py-3 rounded font-bold uppercase tracking-wider hover:bg-white transition duration-300 shadow-lg">
+                    Contact Sales
+                </a>
+            </div>
+        </section>
+
+    </div>
+
+    <footer class="bg-[#010912] pt-16 pb-8 px-6 border-t border-white/10 text-sm">
+        <div class="max-w-7xl mx-auto">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
+                <div class="md:col-span-1">
+                    <div class="text-2xl font-bold leading-tight text-white mb-6">Oceava</div>
+                    <p class="text-gray-500 mb-6 leading-relaxed">Thailand-based tuna import company with over Years of
+                        experience.</p>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold uppercase tracking-widest mb-6">Company</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li><a href="about.html" class="hover:text-ocean-accent transition">About Us</a></li>
+                        <li><a href="team.html" class="hover:text-ocean-accent transition">Our Team</a></li>
+                        <li><a href="#" class="hover:text-ocean-accent transition">Careers</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold uppercase tracking-widest mb-6">Support</h4>
+                    <ul class="space-y-4 text-gray-400">
+                        <li><a href="contact.html" class="hover:text-ocean-accent transition">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-ocean-accent transition">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="text-white font-bold uppercase tracking-widest mb-6">Get in Touch</h4>
+                    <p class="text-gray-400 mb-4">111/222 Bangsue<br>Bangkok, 10800</p>
+                    <p class="text-white font-bold">oceavastaff@oceava.com</p>
+                    <p class="text-white font-bold">+66 555 8888</p>
+                </div>
+            </div>
+            <div
+                class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center text-xs text-gray-600">
+                <p>© 2025 Oceava Company. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script>
+        AOS.init({
+            duration: 1000,
+            once: true,
+            offset: 100
+        });
+
+        window.addEventListener('load', () => {
+            const loader = document.getElementById('loader');
+            if (loader) {
+                loader.style.opacity = '0';
+                setTimeout(() => {
+                    loader.style.display = 'none';
+                    AOS.refresh();
+                }, 500);
+            }
+        });
+    </script>
+
+    <script>
+        // Mobile Menu Toggle Logic
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const menuIcon = menuBtn.querySelector('i');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+
+            // เปลี่ยนไอคอนจาก ขีด (bars) เป็น กากบาท (times)
+            if (mobileMenu.classList.contains('hidden')) {
+                menuIcon.classList.remove('fa-times');
+                menuIcon.classList.add('fa-bars');
+            } else {
+                menuIcon.classList.remove('fa-bars');
+                menuIcon.classList.add('fa-times');
+            }
+        });
+    </script>
+
+</body>
+
+</html>
