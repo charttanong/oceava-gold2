@@ -2046,7 +2046,15 @@
             }
         });
     </script>
+    <script>
+    window.addEventListener('load', function() {
+        setTimeout(function() {
+            AOS.refresh();
+        }, 1000); // สั่งคำนวณตำแหน่ง Animation ใหม่หลังจากโหลดเสร็จ 1 วินาที
+    });
+</script>
 
 </body>
+
 
 </html>
